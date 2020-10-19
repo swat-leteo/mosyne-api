@@ -2,6 +2,6 @@
 
 # Run migrations
 
-# aerich migrate
-# aerich heads
-# aerich upgrade
+aerich migrate
+aerich heads
+aerich upgrade
