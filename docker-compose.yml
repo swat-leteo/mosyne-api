@@ -1,0 +1,32 @@
+version: "3"
+services:
+  api:
+    container_name: api
+    image: mosyne_api
+    build:
+      context: .
+      args:
+        INSTALL_DEV: ${INSTALL_DEV-true}
+    env_file: ./app/.env
+    ports:
+      - 8000:80
+    volumes:
+      - ./app:/app
+    depends_on:
+      - db
+    restart: on-failure
+    command: "/start-reload.sh"
+
+  db:
+    container_name: mosyne_db
+    image: postgres:13
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - ./app/.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
+
+volumes:
+  app-db-data:

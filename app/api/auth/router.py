@@ -1,0 +1,3 @@
+"""
+Router - Auth routes.
+"""

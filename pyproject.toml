@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "mosyne-api"
+version = "0.1.0"
+description = "Mosyne API service"
+authors = ["emanuelosva <emanuelosva@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.61.1"
+uvicorn = "^0.12.1"
+tortoise-orm = "^0.16.16"
+asyncpg = "^0.21.0"
+aerich = "^0.3.1"
+python-jose = "^3.2.0"
+passlib = "^1.7.4"
+bcrypt = "^3.2.0"
+email-validator = "^1.1.1"
+pydantic = "^1.6.1"
+sendgrid = "^6.4.7"
+python-dotenv = "^0.14.0"
+google-cloud-storage = "^1.32.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.790"
+black = "^20.8b1"
+isort = "^5.6.4"
+autoflake = "^1.4"
+flake8 = "^3.8.4"
+pytest = "^6.1.1"
+pytest-asyncio = "^0.14.0"
+pytest-cov = "^2.10.1"
+pytest-xdist = "^2.1.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

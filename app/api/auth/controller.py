@@ -1,0 +1,3 @@
+"""
+Controller - Auth bussiness logic.
+"""

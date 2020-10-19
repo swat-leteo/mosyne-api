@@ -1,0 +1,6 @@
+.editorconfig
+.flake8
+.gitignore
+mypy.ini
+README.md
+scripts
