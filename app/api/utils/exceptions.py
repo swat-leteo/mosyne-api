@@ -13,19 +13,19 @@ def bad_request_400(detail: str) -> None:
     -------
     - detail: str - The exception message.
     """
-    raise HTTPException(status=status.HTTP_400_BAD_REQUEST, detail=detail)
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
 
 
 def unauthorized_401() -> None:
     """Raise a 401 http error - Unauthorized."""
     raise HTTPException(
-        status=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+        status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
     )
 
 
 def forbidden_403() -> None:
     """Raise a 403 http error - Forbidden."""
-    raise HTTPException(status=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
 
 
 def not_found_404(detail: str) -> None:
@@ -35,7 +35,7 @@ def not_found_404(detail: str) -> None:
     -------
     - detail: str - The exception message.
     """
-    raise HTTPException(status=status.HTTP_404_NOT_FOUND, detail=detail)
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
 
 
 def conflict_409(detail: str) -> None:
@@ -45,4 +45,4 @@ def conflict_409(detail: str) -> None:
     -------
     - detail: str - The exception message.
     """
-    raise HTTPException(status=status.HTTP_409_CONFLICT, detail=detail)
+    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=detail)
