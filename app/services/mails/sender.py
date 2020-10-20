@@ -5,16 +5,17 @@ Emails sender class - Sendgrid implementation.
 # Built in
 from typing import List, Type
 
+# Settings
+from config import settings
+
 # Sendgrid
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers import mail
 
-# Settings
-from config import settings
-
 
 class EmailSender:
     """Email sender abstraction.
+
     Perform operations to create and send emails.
     """
 
