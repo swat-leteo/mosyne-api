@@ -2,14 +2,14 @@
 DB - Contact model.
 """
 
+# Enums
+from api.angels.enums import RELATION
+
 # Base model
 from api.utils.models import MosyneModel
 
 # Tortoise ORM
 from tortoise import fields
-
-# Enums
-from .enums import RELATION
 
 
 class Contact(MosyneModel):
