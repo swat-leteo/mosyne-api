@@ -64,6 +64,10 @@ class Settings(BaseSettings):
         "api.angels.models.contact",
         "aerich.models",
     ]
+    DB_PATHS: List[str] = [
+        "api.users.models",
+        "api.angels.models",
+    ]
 
     ########################
     # Email Configurations #
