@@ -9,6 +9,9 @@ TORTOISE_ORM_CONFIG: dict = {
         "default": settings.DB_URL,
     },
     "apps": {
-        "models": {"models": settings.DB_MODELS},
+        "models": {
+            "models": settings.DB_MODELS,
+            "default_connection": "default",
+        },
     },
 }
