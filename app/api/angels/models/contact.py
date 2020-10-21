@@ -45,11 +45,10 @@ class Contact(MosyneModel):
         description="Contact mobile number.",
     )
 
-    class Meta(MosyneModel.Meta):
+    class Meta:
         """Meta info."""
 
         table = "contacts"
-        abstract = False
 
     class PydanticMeta:
         """Pydantic config."""

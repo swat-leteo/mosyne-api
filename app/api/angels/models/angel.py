@@ -77,8 +77,7 @@ class Angel(MosyneModel):
         description="Indicate if the angel suffer hypertension.",
     )
 
-    class Meta(MosyneModel.Meta):
+    class Meta:
         """Meta info."""
 
         table = "angel_profile"
-        abstract = False
