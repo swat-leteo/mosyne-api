@@ -101,7 +101,7 @@ source scripts/format.sh
 
 ### Users (aka Guardians)
 
-- **Create Profile**
+- **Complete Profile**
   - Method: `POST`
   - PATH: `/users`
   - Action: Create user profile
@@ -112,13 +112,13 @@ source scripts/format.sh
   - Action: Return all user info
 
 - **Update Info**
-  - Method: `PATCH`
-  - PATH: `/users/{id}`
-  - Action: Update the user profile
+  - Method: `PUT`
+  - PATH: `/users`
+  - Action: Update the user info
 
 - **Delete account**
   - Method: `DELETE`
-  - PATH: `/users/{id}`
+  - PATH: `/users`
   - Action: Delete the user account and all related info
 
 - **Angel profile advise**
