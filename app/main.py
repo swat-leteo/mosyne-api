@@ -5,13 +5,14 @@ Main app entry point.
 # App
 from api import api_router
 from config import settings
+from db.settings import TORTOISE_ORM_CONFIG
 
 # FastAPI
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-# DB
-
+# Tortoise ORM
+from tortoise.contrib.fastapi import register_tortoise
 
 ################
 # App Settings #
@@ -28,7 +29,7 @@ app = FastAPI(
 # DB Settings #
 ###############
 
-# register_tortoise(app, config=TORTOISE_ORM_CONFIG, generate_schemas=True)
+register_tortoise(app, config=TORTOISE_ORM_CONFIG, generate_schemas=False)
 
 
 ###############

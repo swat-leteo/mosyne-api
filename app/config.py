@@ -57,7 +57,7 @@ class Settings(BaseSettings):
 
     POSTGRES = PostgresSettings()
     DB_URL: str = POSTGRES_DB_URL.format(**POSTGRES.dict())
-    DB_MODELS: List[str] = ["aerich.models"]
+    DB_MODELS: List[str] = ["api.users.models", "api.angels.models", "aerich.models"]
 
     ########################
     # Email Configurations #
