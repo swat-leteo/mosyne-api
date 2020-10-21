@@ -2,6 +2,9 @@
 Schemas - User Schemas
 """
 
+# Typing
+from typing import Optional
+
 # Setting
 from config import settings
 
@@ -16,43 +19,43 @@ from tortoise.contrib.pydantic import pydantic_model_creator
 from .models import Address, User
 
 # Init models to get all related fields
-Tortoise.init_models(settings.DB_MODELS, app_label="models")
+Tortoise.init_models(settings.DB_PATHS, app_label="models")
 
 ###################
 # Address Schemas #
 ###################
 
-AddressDto = pydantic_model_creator(Address)
-
-
-class AddressInDto(BaseModel):
-    """Schema to register/update user address."""
-
-    city : str = Field(...)
-    muicipality : str = Field(...)
-    neighborhood : str = Field(...)
-    street : str = Field(...)
-    num_int : str = Field(...)
-    num_ext : str = Field(...)
-    cp : str = Field(...)
-
+AddressDto = pydantic_model_creator(
+    Address,
+    exclude=("users", "id", "angel_profile", "created", "updated"),
+)
 
 
 ################
 # User Schemas #
 ################
 
-UserDto = pydantic_model_creator(User)
+UserDto = pydantic_model_creator(User, exclude=("angels", "password", "is_verified"))
 
 
-class UserUpdateDto(BaseModel):
+class UserProfile(BaseModel):
+    """Body schema for create profile."""
+
+    phone: str = Field(..., example="5512369856")
+    cel: str = Field(..., example="+525516963478")
+    photo: str = Field("", example="base64_encode-image")
+
+    address: AddressDto
+
+
+class UserUpdateDto(UserProfile):
     """Body schema for update user info."""
 
-    email: str = Field(example="stan@marvel.com")
-    firstname: str = Field(example="Stan")
-    lastname: str = Field(example="Lee")
-    phone: str = Field(example="5512369856")
-    cel: str = Field(example="+525516963478")
-    photo: str = Field(example="base64_encode-image")
+    email: str = Field("", example="stan@marvel.com")
+    firstname: str = Field("", example="Stan")
+    lastname: str = Field("", example="Lee")
 
-    address: AddressInDto
+    phone: str = Field("", example="5512369856")
+    cel: str = Field("", example="+525516963478")
+
+    address: Optional[AddressDto]
