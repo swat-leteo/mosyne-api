@@ -39,12 +39,12 @@ router = APIRouter()
         "403": {"model": responses.Forbidden},
     },
 )
-async def retrieve_user(
+async def complete_user_profile(
     user_profile: UserProfile, user=Depends(get_auth_user)
 ) -> UserDto:
-    """Retrieve a user by id."""
-    user_retrieved = await complete_profile(user.id, user_data)
-    return user_retrieved
+    """Complete the user profile with passed data."""
+    user_updated = await complete_profile(user.id, user_data)
+    return user_updated
 
 
 @router.get(
