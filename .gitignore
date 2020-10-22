@@ -89,5 +89,3 @@ dmypy.json
 .vscode/**
 *.code-workspace
 
-# TORTOISE
-**/migrations/**
