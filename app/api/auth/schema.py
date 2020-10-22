@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 class LoginCredentials(BaseModel):
     """Body schema for login a user."""
 
-    email: str = Field(..., example="stan@gmail.com")
+    email: str = Field(..., example="stan@marvel.com")
     password: str = Field(..., example="Marvel123")
 
 

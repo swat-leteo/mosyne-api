@@ -3,7 +3,7 @@ Controller - Auth bussiness logic.
 """
 
 # Models
-from api.users.models import User
+from api.users.models import Address, User
 from api.users.schema import UserDto
 
 # Exceptions
@@ -34,6 +34,8 @@ async def signup(user_info: SignupInfo) -> User:
     user_data.update({"password": hashed_password})
     try:
         user = await User.create(**user_data)
+        user.address = await Address.create()
+        await user.save()
     except IntegrityError:
         return exceptions.conflict_409("Email already exist")
     return user

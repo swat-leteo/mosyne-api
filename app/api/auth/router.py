@@ -73,8 +73,8 @@ async def register_user(
 async def login_user(credentials: LoginCredentials, response: Response) -> UserDto:
     """Verify user credentials and return user info."""
     user = await login(credentials.email, credentials.password)
-    token = create_access_token(user.email)
-    set_credential(response, token)
+    session_token = create_access_token(user.email)
+    set_credential(response, session_token)
     return user
 
 
@@ -104,7 +104,7 @@ async def resend_verification_email(
     email: str = Query(...),
 ) -> dict:
     """Resend a verification email to the current user."""
-    verification_token = create_access_token(email=email)
+    verification_token = create_access_token(email=email, short_duration=True)
     background_task.add_task(
         send_verification_email,
         recipient_name="Guardian",
@@ -121,12 +121,12 @@ async def resend_verification_email(
         "200": {"model": responses.Msg},
     },
 )
-async def send_recovery_password_email(
+async def send_recovery_email(
     background_task: BackgroundTasks,
     email: str = Query(...),
 ) -> dict:
     """Send a email with recovery password token."""
-    verification_token = create_access_token(email=email)
+    verification_token = create_access_token(email=email, short_duration=True)
     background_task.add_task(
         send_recovery_password_email,
         email=email,
@@ -149,7 +149,7 @@ async def reset_credentials(
 ) -> UserDto:
     """Reset the user password."""
     await reset_password(token, password)
-    return responses.Msg("Password reseted")
+    return responses.Msg(detail="Password reseted")
 
 
 @router.get(
