@@ -17,8 +17,9 @@ def test_create_test_user(client, user_mock):
     assert body.get("email") == user_mock["email"]
     assert body.get("id") is not None
 
-    body.get("id")
-    user_mock["email"]
+    user_id = body.get("id")
+    user_email = user_mock["email"]
+    print(user_id, user_email)
 
 
 def test_complete_profile(client, get_token, profile_mock, app_settings):
