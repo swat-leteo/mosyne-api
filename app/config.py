@@ -2,35 +2,29 @@
 Unu API - Application settings.
 """
 
+# Built in
+import os
 from typing import List
 
+# Settings
 from pydantic import BaseSettings
 
+# Postgres URL format.
 POSTGRES_DB_URL = "postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
 
 class PostgresSettings(BaseSettings):
     """Postgres env values."""
 
-    class Config:
-        """Get env variables from dotenv file."""
-
-        env_file = ".env"
-
-    POSTGRES_PASSWORD: str
-    POSTGRES_USER: str
-    POSTGRES_DB: str
-    POSTGRES_PORT: str
-    POSTGRES_SERVER: str
+    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD")
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER")
+    POSTGRES_DB: str = os.getenv("POSTGRES_DB")
+    POSTGRES_PORT: str = os.getenv("POSTGRES_PORT")
+    POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER")
 
 
 class Settings(BaseSettings):
     """General Application settings class."""
-
-    class Config:
-        """Get env variables from dotenv file."""
-
-        env_file = ".env"
 
     ##########################
     # General Configurations #
@@ -38,16 +32,19 @@ class Settings(BaseSettings):
 
     APP_NAME: str = "Mosyne - API"
     API_PREFIX: str = "/api"
-    CORS_ORIGIN: List[str]
-    EMAIL_ADMIN: str
-    WEB_HOST: str
-    DEBUG_MODE: bool
+    CORS_ORIGIN: List[str] = ["*"]
+    EMAIL_ADMIN: str = os.getenv("EMAIL_ADMIN")
+
+    WEB_HOST: str = "https://mosine.vercel.app"
+    API_HOST: str = "https://api-mosine.appspot.com"
+
+    DEBUG_MODE: bool = os.getenv("DEBUG_MODE", False)
 
     ############
     # Security #
     ############
 
-    SECRET_JWT: str
+    SECRET_JWT: str = os.getenv("SECRET_JWT")
     COOKIE_SESSION_NAME: str = "oreo_session"
     COOKIE_SESSION_AGE: int = 60 * 60 * 24 * 7 * 4  # One month
 
@@ -73,16 +70,15 @@ class Settings(BaseSettings):
     # Email Configurations #
     ########################
 
-    SENDGRID_API_KEY: str
-    EMAIL_SENDER: str
+    SENDGRID_API_KEY: str = os.getenv("SENDGRID_API_KEY")
+    EMAIL_SENDER: str = os.getenv("EMAIL_SENDER")
 
     ################
     # File Storage #
     ################
 
-    GOOGLE_STORAGE_BUCKET: str
-    ALLOWED_EXTENSIONS: List[str]
-    GOOGLE_APPLICATION_CREDENTIALS: str
+    GOOGLE_STORAGE_BUCKET: str = os.getenv("GOOGLE_STORAGE_BUCKET")
+    ALLOWED_EXTENSIONS: List[str] = os.getenv("ALLOWED_EXTENSIONS")
 
 
 settings = Settings()
