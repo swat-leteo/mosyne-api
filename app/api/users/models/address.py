@@ -33,8 +33,7 @@ class Address(MosyneModel):
 
     cp = fields.CharField(max_length=8, description="Postal code")
 
-    class Meta(MosyneModel.Meta):
+    class Meta:
         """Meta info."""
 
         table = "address"
-        abstract = False

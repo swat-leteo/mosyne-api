@@ -2,14 +2,14 @@
 DB - Angel model.
 """
 
+# Enums
+from api.angels.enums import BLOOD_TYPE, DETONANT, RELATION
+
 # Base model
 from api.utils.models import MosyneModel
 
 # Tortoise ORM
 from tortoise import fields
-
-# Enums
-from .enums import BLOOD_TYPE, DETONANT, RELATION
 
 
 class Angel(MosyneModel):
@@ -77,8 +77,7 @@ class Angel(MosyneModel):
         description="Indicate if the angel suffer hypertension.",
     )
 
-    class Meta(MosyneModel.Meta):
+    class Meta:
         """Meta info."""
 
         table = "angel_profile"
-        abstract = False
