@@ -18,7 +18,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends
 from services.mails import send_angel_advise
 
 # Controller
-from .controller import complete_profile, current_user, delete_user, update_user
+from .controller import complete_profile, current_user, delete_user, update_user, get_guardian_email
 
 # Schemas
 from .schema import UserDto, UserProfile, UserUpdateDto
@@ -113,10 +113,10 @@ async def send_email_for_angel(
     background_task: BackgroundTasks,
 ) -> responses.EmailMsg:
     """Send a email to the guardian when his/her angel profile is visited."""
-    email = await get_guardian_email(guardian_id)
+    email = await get_guardian_email(guardian_id, angel_name)
 
     if email:
         background_task.add_task(
             send_angel_advise, email=email, angel_name=angel_name, lat=lat, lon=lon
         )
-    return responses.EmailMsg("Email sent")
+    return responses.EmailMsg(detail="Email sent")
