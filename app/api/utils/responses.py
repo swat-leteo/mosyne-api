@@ -57,3 +57,9 @@ class Conflict(BaseModel):
     """Conflict model exception."""
 
     detail: str = Field(example="Entitie name already exists")
+
+
+class PreconditionFailed(BaseModel):
+    """Conflict model exception."""
+
+    detail: str = Field(example="Precondition Failed")
