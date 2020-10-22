@@ -121,8 +121,9 @@ async def get_guardian_email(guardian_id: UUID, angel_name: str) -> str:
     -------
     - email: str - The guardian email.
     """
-    user = await User.get(id=guardian_id)
-    if not user:
+    try:
+        user = await User.get(id=guardian_id)
+    except DoesNotExist:
         return False
 
     angels = await user.fetch_related("angels")
