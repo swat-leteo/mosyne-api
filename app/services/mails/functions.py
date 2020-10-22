@@ -30,7 +30,7 @@ def send_verification_email(recipient_name: str, email: str, token: str) -> None
     with open(f"{templates_dir}/welcome.html") as f:
         template_str = f.read()
 
-    link = f"{settings.WEB_HOST}/verification?token={token}"
+    link = f"{settings.API_HOST}/api/auth/make-verification?token={token}"
     email_content = template_str.format(recipient_name=recipient_name, link=link)
 
     email = email_sender.create_email(
@@ -52,7 +52,7 @@ def send_recovery_password_email(email: str, token: str) -> None:
     with open(f"{templates_dir}/recovery_password.html") as f:
         template_str = f.read()
 
-    link = f"{settings.WEB_HOST}/recovery-password?token={token}"
+    link = f"{settings.WEB_HOST}/recovery-password?token={token}?email={email}"
     email_content = template_str.format(link=link)
 
     email = email_sender.create_email(
