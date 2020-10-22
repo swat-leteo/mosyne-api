@@ -1,0 +1,57 @@
+name: mosineAPI
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+    env:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: mosyne
+      POSTGRES_PORT: 5432
+      POSTGRES_SERVER: localhost
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python - pip install --upgrade pip
+
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/opt/poetry python && \
+          cd /usr/local/bin && \
+          ln -s /opt/poetry/bin/poetry && \
+          poetry config virtualenvs.create false
+
+          poetry install --no-root
+
+      - name: Run tests
+        run: pytest
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.ref = 'refs/heads/master'
+    needs: test
+    steps:
+      - name: Initialize Google Cloud SDK
+        uses: zxyle/publish-gae-action@master
+        with:
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+          serivce_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          gae_variables: ${{ secrets.GAE_VARIABLES }}
+      - name: Deploy to Google App Engine
+        run: |
+          gcloud auth active-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json
+
+          # Choose current project
+          gcloud config set project ${{ secrets.PROJECT_ID }}
+
+          # Deploy project
+          gcloud -q app deploy app.yaml --promote
