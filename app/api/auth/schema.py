@@ -3,16 +3,20 @@ Schemas - Auth Schemas
 """
 
 
-
 from pydantic import BaseModel, Field
 
-from users.models import User
+################
+# Auth Schemas #
+################
 
-from tortoise import Tortoise
-from tortoise.contrib.pydantic import pydantic_model_creator
 
-UserDto = pydantic_model_creator(User)
-
-class Credentials(BaseModel):
+class LoginCredentials(BaseModel):
     email: str = Field(...)
     password: str = Field(...)
+
+
+class SignupInfo(BaseModel):
+    email: str = Field(...)
+    passsword: str = Field(...)
+    first_name: str = Field(...)
+    last_name: str = Field(...)
