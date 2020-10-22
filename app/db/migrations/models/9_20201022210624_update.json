@@ -1,0 +1,8 @@
+{
+  "upgrade": [
+    "ALTER TABLE \"angel_profile\" ALTER COLUMN \"address_id\" DROP NOT NULL"
+  ],
+  "downgrade": [
+    "ALTER TABLE \"angel_profile\" ALTER COLUMN \"address_id\" SET NOT NULL"
+  ]
+}
