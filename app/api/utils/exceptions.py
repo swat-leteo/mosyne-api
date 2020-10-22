@@ -46,3 +46,10 @@ def conflict_409(detail: str) -> None:
     - detail: str - The exception message.
     """
     raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=detail)
+
+
+def server_error_500() -> None:
+    """Raise a 500 http error - Server error."""
+    raise HTTPException(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Server error"
+    )

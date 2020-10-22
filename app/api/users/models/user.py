@@ -40,11 +40,13 @@ class User(MosyneModel):
     phone = fields.CharField(
         max_length=16,
         description="User phone number.",
+        default="",
     )
 
     cel = fields.CharField(
         max_length=16,
         description="User mobile number.",
+        default="",
     )
 
     photo = fields.CharField(
@@ -59,8 +61,7 @@ class User(MosyneModel):
         description="FK to user address",
     )
 
-    class Meta(MosyneModel.Meta):
+    class Meta:
         """Meta info."""
 
         table = "users"
-        abstract = False

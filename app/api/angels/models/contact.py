@@ -2,14 +2,14 @@
 DB - Contact model.
 """
 
+# Enums
+from api.angels.enums import RELATION
+
 # Base model
 from api.utils.models import MosyneModel
 
 # Tortoise ORM
 from tortoise import fields
-
-# Enums
-from .enums import RELATION
 
 
 class Contact(MosyneModel):
@@ -45,11 +45,10 @@ class Contact(MosyneModel):
         description="Contact mobile number.",
     )
 
-    class Meta(MosyneModel.Meta):
+    class Meta:
         """Meta info."""
 
         table = "contacts"
-        abstract = False
 
     class PydanticMeta:
         """Pydantic config."""
