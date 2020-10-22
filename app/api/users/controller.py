@@ -109,16 +109,24 @@ async def delete_user(user_id: UUID) -> responses.Msg:
     return responses.Msg("User deleted")
 
 
-async def get_guardian_email(guardian_id: UUID) -> str:
+async def get_guardian_email(guardian_id: UUID, angel_name: str) -> str:
     """Return the email of the angel guardian.
 
     Params:
     -------
     - guardian_id: UUID - The angel id.
+    - angel_name: str - The angel name.
 
     Return:
     -------
     - email: str - The guardian email.
     """
     user = await User.get(id=guardian_id)
-    return user.email
+    if not user:
+        return False
+
+    angels = await user.fetch_related("angels")
+    for angel in angels:
+        if angel.name == angel_name:
+            return user.email
+    return False

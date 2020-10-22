@@ -97,7 +97,7 @@ async def delete_existing_user(user=Depends(get_auth_user)) -> responses.Msg:
 
 
 @router.post(
-    "/angel-advise/{guardian_id}/{angel_name}",
+    "/angel-advise/{guardian_id}",
     status_code=200,
     responses={
         "200": {"model": responses.EmailMsg},
@@ -113,9 +113,10 @@ async def send_email_for_angel(
     background_task: BackgroundTasks,
 ) -> responses.EmailMsg:
     """Send a email to the guardian when his/her angel profile is visited."""
-    email, angel_name = await get_guardian_email(guardian_id)
+    email = await get_guardian_email(guardian_id)
 
-    background_task.add_task(
-        send_angel_advise, email=email, angel_name=angel_name, lat=lat, lon=lon
-    )
+    if email:
+        background_task.add_task(
+            send_angel_advise, email=email, angel_name=angel_name, lat=lat, lon=lon
+        )
     return responses.EmailMsg("Email sent")
