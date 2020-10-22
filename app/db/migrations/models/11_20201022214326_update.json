@@ -1,0 +1,8 @@
+{
+  "upgrade": [
+    "ALTER TABLE \"address\" ALTER COLUMN \"city\" SET DEFAULT ''"
+  ],
+  "downgrade": [
+    "ALTER TABLE \"address\" ALTER COLUMN \"city\" DROP DEFAULT"
+  ]
+}
