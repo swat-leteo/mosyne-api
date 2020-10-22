@@ -2,7 +2,10 @@
 Schemas - Auth Schemas
 """
 
+# User schema
+from api.users import schema
 
+# Pydantic
 from pydantic import BaseModel, Field
 
 ################
@@ -11,12 +14,18 @@ from pydantic import BaseModel, Field
 
 
 class LoginCredentials(BaseModel):
-    email: str = Field(...)
-    password: str = Field(...)
+    """Body schema for login a user."""
+
+    email: str = Field(..., example="stan@gmail.com")
+    password: str = Field(..., example="Marvel123")
 
 
-class SignupInfo(BaseModel):
-    email: str = Field(...)
-    passsword: str = Field(...)
-    first_name: str = Field(...)
-    last_name: str = Field(...)
+class SignupInfo(LoginCredentials):
+    """Body schema for create user."""
+
+    firstname: str = Field(..., example="Stan")
+    lastname: str = Field(..., example="Lee")
+
+
+class UserDto(schema.UserDto):
+    """Only inherit from UserDto."""
