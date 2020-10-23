@@ -48,17 +48,25 @@ jobs:
           poetry export -f requirements.txt --output requirements.txt
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install aerich
       - name: Migrations
         run: |
-          sudo rm -rf app/db/migrations/**
-          aerich init -t app.db.settings.TORTOISE_ORM_CONFIG --location app/db/migrations
+          cd app
+          # Make sure there are not previous migrations
+          sudo rm -rf migrations
+          # Init the db and ORM
+          aerich init -t db.TORTOISE_ORM_CONFIG
           aerich init-db
+          # To create the ORM manager (cause aerich bug)
+          sudo rm -rf migrations
+          sudo rm -rf aerich.ini
+          aerich init -t db.TORTOISE_ORM_CONFIG
+          aerich init-db
+          # Apply migrations
           aerich migrate
+          aerich heads
+          aerich upgrade
       - name: Test
-        run: |
-          pip install pytest
-          pytest
+        run: pytest
   deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
@@ -71,7 +79,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.PROJECT_ID }}
           gae_variables: ${{ secrets.GAE_VARIABLES }}
-          gae_config_path: ./../app.yaml
+          gae_config_path: app.yaml
       - name: Deploy to Google App Engine
         run: |
           gcloud auth active-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json

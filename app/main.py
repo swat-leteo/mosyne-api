@@ -5,7 +5,7 @@ Main app entry point.
 # App
 from api import api_router
 from config import settings
-from db.settings import TORTOISE_ORM_CONFIG
+from db import TORTOISE_ORM_CONFIG
 
 # FastAPI
 from fastapi import FastAPI

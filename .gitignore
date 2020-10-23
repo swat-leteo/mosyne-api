@@ -89,6 +89,10 @@ dmypy.json
 .vscode/**
 *.code-workspace
 
+# Migrations
+**/migrations/**
+app/aerich.ini
+
 # App engine
 key.json
 gae_vars.json
