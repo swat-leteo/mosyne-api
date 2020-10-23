@@ -22,9 +22,8 @@ from tortoise.contrib.test import finalizer, initializer
 @pytest.fixture(scope="module")
 def client():
     """Test client."""
-    db_url = f"postgres://postgres:postgres@localhost:5432/testing"
     if os.getenv("TESTING", False):
-        initializer(settings.DB_MODELS, db_url=db_url)
+        initializer(settings.DB_MODELS, db_url=os.getenv("DATABASE_URL"))
     else:
         initializer(settings.DB_MODELS)
     with TestClient(app) as c:
