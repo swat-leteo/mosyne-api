@@ -32,6 +32,8 @@ jobs:
 
           poetry install --no-root
 
+          sudo source /opt/poetry/env
+
       - name: Run tests
         run: pytest
   deploy:
