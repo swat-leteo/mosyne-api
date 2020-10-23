@@ -9,6 +9,9 @@ from typing import List
 # Settings
 from pydantic import BaseSettings
 
+# Envs
+TESTING = os.getenv("TESTING", False)
+
 # Postgres URL format.
 POSTGRES_DB_URL = "postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
@@ -70,7 +73,7 @@ class Settings(BaseSettings):
     # Email Configurations #
     ########################
 
-    SENDGRID_API_KEY: str = os.getenv("SENDGRID_API_KEY")
+    SENDGRID_API_KEY: str = os.getenv("SENDGRID_API_KEY") if not TESTING else ""
     EMAIL_SENDER: str = os.getenv("EMAIL_SENDER")
 
     ################
