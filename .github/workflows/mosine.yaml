@@ -52,13 +52,13 @@ jobs:
       - name: Migrations
         run: |
           sudo rm -rf app/db/migrations/**
-          python -m aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
-          python -m aerich init-db
-          python -m aerich migrate
+          aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
+          aerich init-db
+          aerich migrate
       - name: Test
         run: |
           pip install pytest
-          python -m pytest
+          pytest
   deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
