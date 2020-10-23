@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
       - name: Run tests
-        run: pytest
+        run: poetry run pytest
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
