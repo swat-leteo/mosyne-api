@@ -3,27 +3,30 @@ Pytest Fixtures
 """
 
 # Built in
+import os
 from uuid import uuid4
 
 # Test tools
 import pytest
-from tortoise.contrib.test import finalizer, initializer
 
 # Utils
 from api.utils.security import create_access_token
-from fastapi.testclient import TestClient
-
 from config import settings
+from fastapi.testclient import TestClient
 
 # App server
 from main import app
+from tortoise.contrib.test import finalizer, initializer
 
 
 @pytest.fixture(scope="module")
 def client():
     """Test client."""
-    db_url = f"postgres://postgres:postgres@db:5432/testing"
-    initializer(settings.DB_MODELS)
+    db_url = f"postgres://postgres:postgres@localhots:5432/testing"
+    if os.getenv("TESTING", False):
+        initializer(settings.DB_MODELS, db_url=db_url)
+    else:
+        initializer(settings.DB_MODELS)
     with TestClient(app) as c:
         yield c
     finalizer()
@@ -40,9 +43,11 @@ def get_token():
     """
     Return a function to generate a token
     """
+
     def _access_token(email):
         token = create_access_token(email)
         return token
+
     return _access_token
 
 

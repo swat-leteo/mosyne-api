@@ -108,7 +108,7 @@ def test_delete_user(client, get_token, app_settings):
         "/api/user",
         cookies={f"{app_settings.COOKIE_SESSION_NAME}": token},
     )
-    body = response.json()
+    response.json()
 
     assert response.status_code == 200
     assert "detail" in response.json()

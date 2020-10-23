@@ -12,9 +12,10 @@ jobs:
     env:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: mosyne
+      POSTGRES_DB: testing
       POSTGRES_PORT: 5432
       POSTGRES_SERVER: localhost
+      TESTING: true
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
@@ -28,11 +29,11 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
       - name: Run tests
-        run: poetry run pytest
+        run: poetry run pytest --verbose tests
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
-    needs: test
+    # needs: test
     steps:
       - name: Initialize Google Cloud SDK
         uses: zxyle/publish-gae-action@master
