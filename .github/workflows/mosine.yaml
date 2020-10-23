@@ -1,9 +1,14 @@
 name: mosineAPI
-on: [pull_request]
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged
     services:
       postgres:
         image: postgres:13
@@ -27,6 +32,7 @@ jobs:
       POSTGRES_PORT: 5432
       POSTGRES_HOST: localhost
       TESTING: true
+      SECRET_JWT: test-secret
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
@@ -38,17 +44,25 @@ jobs:
         with:
           poetry-version: 1.1.2
       - name: Install dependencies
-        run: poetry install --no-root
-      - name: Run tests
         run: |
-          poetry aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
-          poetry aerich init-db
-          poetry run aerich migrate
-          poetry run pytest
+          poetry export -f requirements.txt --output requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install aerich
+      - name: Migrations
+        run: |
+          sudo rm -rf app/db/migrations/**
+          python -m aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
+          python -m aerich init-db
+          python -m aerich migrate
+      - name: Test
+        run: |
+          pip install pytest
+          python -m pytest
   deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    # needs: test
+    if: github.event.pull_request.merged
+    needs: test
     steps:
       - name: Initialize Google Cloud SDK
         uses: zxyle/publish-gae-action@master
