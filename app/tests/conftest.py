@@ -7,22 +7,26 @@ from uuid import uuid4
 
 # Test tools
 import pytest
+from tortoise.contrib.test import finalizer, initializer
 
 # Utils
 from api.utils.security import create_access_token
 from fastapi.testclient import TestClient
 
-from app.config import settings
+from config import settings
 
 # App server
-from app.main import app
+from main import app
 
 
 @pytest.fixture(scope="module")
 def client():
     """Test client."""
-    client = TestClient(app)
-    yield client
+    db_url = f"postgres://postgres:postgres@db:5432/testing"
+    initializer(settings.DB_MODELS)
+    with TestClient(app) as c:
+        yield c
+    finalizer()
 
 
 @pytest.fixture()
@@ -36,12 +40,10 @@ def get_token():
     """
     Return a function to generate a token
     """
-
-    def access_toke(email):
-        token = create_access_token(email, short_duration=True)
+    def _access_token(email):
+        token = create_access_token(email)
         return token
-
-    return access_toke
+    return _access_token
 
 
 @pytest.fixture()
@@ -59,6 +61,9 @@ def user_mock():
 def profile_mock():
     """Return the test user profile."""
     return {
+        "password": "user123",
+        "firstname": "Stan",
+        "lastname": "Lee",
         "phone": "5512369856",
         "cel": "+525516963478",
         "photo": "",
