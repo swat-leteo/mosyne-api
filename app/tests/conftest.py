@@ -22,7 +22,7 @@ from tortoise.contrib.test import finalizer, initializer
 @pytest.fixture(scope="module")
 def client():
     """Test client."""
-    db_url = f"postgres://postgres:postgres@localhots:5432/testing"
+    db_url = f"postgres://postgres:postgres@localhost:5432/testing"
     if os.getenv("TESTING", False):
         initializer(settings.DB_MODELS, db_url=db_url)
     else:
