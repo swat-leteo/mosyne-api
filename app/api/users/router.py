@@ -18,33 +18,16 @@ from fastapi import APIRouter, BackgroundTasks, Depends
 from services.mails import send_angel_advise
 
 # Controller
-from .controller import complete_profile, current_user, delete_user, update_user, get_guardian_email
+from .controller import current_user, delete_user, get_guardian_email, update_user
 
 # Schemas
-from .schema import UserDto, UserProfile, UserUpdateDto
+from .schema import UserDto, UserUpdateDto
 
 ###############
 # User router #
 ###############
 
 router = APIRouter()
-
-
-@router.post(
-    "",
-    status_code=201,
-    responses={
-        "201": {"model": UserDto},
-        "401": {"model": responses.Unauthorized},
-        "403": {"model": responses.Forbidden},
-    },
-)
-async def complete_user_profile(
-    user_profile: UserProfile, user=Depends(get_auth_user)
-) -> UserDto:
-    """Complete the user profile with passed data."""
-    user_updated = await complete_profile(user.id, user_data)
-    return user_updated
 
 
 @router.get(
@@ -68,7 +51,6 @@ async def get_current_user(user=Depends(get_auth_user)) -> UserDto:
         "200": {"model": UserDto},
         "401": {"model": responses.Unauthorized},
         "403": {"model": responses.Forbidden},
-        "404": {"model": responses.Forbidden},
         "409": {"model": responses.Conflict},
     },
 )
@@ -92,8 +74,8 @@ async def update_user_info(
 )
 async def delete_existing_user(user=Depends(get_auth_user)) -> responses.Msg:
     """Delete a existing user that matches th passed id."""
-    result = await delete_user(user.id)
-    return result
+    await delete_user(user.id)
+    return responses.Msg(detail="User deleted")
 
 
 @router.post(
@@ -108,9 +90,9 @@ async def delete_existing_user(user=Depends(get_auth_user)) -> responses.Msg:
 async def send_email_for_angel(
     guardian_id: UUID,
     angel_name: str,
-    lat: Optional[str],
-    lon: Optional[str],
     background_task: BackgroundTasks,
+    lat: Optional[str] = None,
+    lon: Optional[str] = None,
 ) -> responses.EmailMsg:
     """Send a email to the guardian when his/her angel profile is visited."""
     email = await get_guardian_email(guardian_id, angel_name)

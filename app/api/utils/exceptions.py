@@ -48,6 +48,16 @@ def conflict_409(detail: str) -> None:
     raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=detail)
 
 
+def precondition_failed_412(detail: str) -> None:
+    """Raise a 412 http error - Precondition failed.
+
+    Params:
+    -------
+    - detail: str - The exception message.
+    """
+    raise HTTPException(status_code=status.HTTP_412_PRECONDITION_FAILED, detail=detail)
+
+
 def server_error_500() -> None:
     """Raise a 500 http error - Server error."""
     raise HTTPException(

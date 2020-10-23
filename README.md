@@ -85,12 +85,12 @@ source scripts/format.sh
 
 - **Email Verification**
   - Method: `POST`
-  - PATH: `/auth/verification/{email}`
+  - PATH: `/auth/verification?email=email@...`
   - Action: Send email with account token verification
 
 - **Recovery Password**
   - Method: `POST`
-  - PATH: `/auth/recovery-password/{email}`
+  - PATH: `/auth/recovery-password?email=email@...`
   - Action: Send email with recovery password token
 
 - **Reset Password**

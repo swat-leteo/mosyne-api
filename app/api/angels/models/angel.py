@@ -41,6 +41,7 @@ class Angel(MosyneModel):
         model_name="models.Address",
         on_delete=fields.CASCADE,
         description="FK to user address.",
+        null=True,
     )
 
     living_alone = fields.BooleanField(

@@ -38,24 +38,16 @@ AddressDto = pydantic_model_creator(
 UserDto = pydantic_model_creator(User, exclude=("angels", "password", "is_verified"))
 
 
-class UserProfile(BaseModel):
-    """Body schema for create profile."""
-
-    phone: str = Field(..., example="5512369856")
-    cel: str = Field(..., example="+525516963478")
-    photo: str = Field("", example="base64_encode-image")
-
-    address: AddressDto
-
-
-class UserUpdateDto(UserProfile):
+class UserUpdateDto(BaseModel):
     """Body schema for update user info."""
 
-    email: str = Field("", example="stan@marvel.com")
-    firstname: str = Field("", example="Stan")
+    email: str = Field(..., example="stan@marvel.com")
+    firstname: str = Field(..., example="Stan")
     lastname: str = Field("", example="Lee")
 
     phone: str = Field("", example="5512369856")
     cel: str = Field("", example="+525516963478")
+
+    photo: str = Field(..., example="https://mosine.googlestorage.2515-1515-145")
 
     address: Optional[AddressDto]

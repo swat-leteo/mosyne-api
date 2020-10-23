@@ -158,5 +158,21 @@ def set_credential(response: Response, token: str) -> None:
         value=token,
         max_age=settings.COOKIE_SESSION_AGE,
         secure=not settings.DEBUG_MODE,
-        httponly=True,
+        httponly=not settings.DEBUG_MODE,
+    )
+
+
+def remove_credential(response: Response) -> None:
+    """Remove cookie session.
+
+    Params:
+    -------
+    - response: Response - The fastAPI response instance.
+    """
+    response.set_cookie(
+        key=settings.COOKIE_SESSION_NAME,
+        value="",
+        max_age=0,
+        secure=not settings.DEBUG_MODE,
+        httponly=not settings.DEBUG_MODE,
     )

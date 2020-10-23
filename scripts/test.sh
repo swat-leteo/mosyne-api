@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
-
-pytest --cov=app --cov-report=term-missing app/tests "${@}"
+docker-compose -f docker-compose.test.yml up

@@ -6,45 +6,19 @@ Controller - Users bussiness logic.
 from uuid import UUID
 
 # Exceptions
-from api.utils import exceptions, responses
+from api.utils import exceptions
 
 # Storage
 from services.storage import get_or_update_image
 
 # Db exceptions
-from tortoise.exceptions import DoesNotExist, IntegrityError, OperationalError
+from tortoise.exceptions import DoesNotExist, IntegrityError
 
 # Models
 from .models import Address, User
 
 # Schema & Models
-from .schema import UserDto, UserProfile, UserUpdateDto
-
-
-async def complete_profile(user_id: UUID, user_data: UserProfile) -> UserDto:
-    """Retrieve a user.
-
-    Params:
-    -------
-    - user_id: UUID - The user pk.
-    - user_data: UserProfile - The data to complete the profile
-
-    Return:
-    -------
-    - user: UserDto - The user info.
-    """
-    if user_data.photo:
-        user_data.photo = get_or_update_image(user_data.photo)
-    try:
-        user = await User.get(id=user_id)
-
-        user.address = await Address.create(**user_data.address.dict())
-        user.update_from_dict(user_data.dict())
-        await user.save()
-    except (IntegrityError, OperationalError):
-        return exceptions.server_error_500()
-
-    return await UserDto.from_tortoise_orm(user)
+from .schema import UserDto, UserUpdateDto
 
 
 async def current_user(user: User) -> UserDto:
@@ -78,16 +52,25 @@ async def update_user(user_id: UUID, user_data: UserUpdateDto) -> UserDto:
     try:
         user = await User.get(id=user_id)
 
-        user_data.photo = get_or_update_image(user_data.photo)
-        user.update_from_dict(user_data.dict())
+        address = user_data.address
+        user_data_dict = user_data.dict()
+        user_data_dict.pop("address")
+
+        user.update_from_dict(user_data_dict)
         await user.save()
+
+        if address:
+            user_address = await Address.filter(users=user.id).first()
+            user_address.update_from_dict(address.dict())
+            await user_address.save()
+
     except IntegrityError:
         return exceptions.conflict_409("Email already exists")
 
     return await UserDto.from_tortoise_orm(user)
 
 
-async def delete_user(user_id: UUID) -> responses.Msg:
+async def delete_user(user_id: UUID) -> None:
     """Update a user.
 
     Params:
@@ -105,8 +88,6 @@ async def delete_user(user_id: UUID) -> responses.Msg:
         await user.delete()
     except DoesNotExist:
         return exceptions.not_found_404("User not found")
-
-    return responses.Msg("User deleted")
 
 
 async def get_guardian_email(guardian_id: UUID, angel_name: str) -> str:
