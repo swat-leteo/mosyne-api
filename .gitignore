@@ -88,3 +88,7 @@ dmypy.json
 .vscode
 .vscode/**
 *.code-workspace
+
+# App engine
+key.json
+gae_vars.json
