@@ -48,18 +48,25 @@ jobs:
           poetry export -f requirements.txt --output requirements.txt
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install aerich
       - name: Migrations
         run: |
-          sudo rm -rf app/db/migrations/**
           cd app
-          aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
+          # Make sure there are not previous migrations
+          sudo rm -rf migrations
+          # Init the db and ORM
+          aerich init -t db.TORTOISE_ORM_CONFIG
           aerich init-db
+          # To create the ORM manager (cause aerich bug)
+          sudo rm -rf migrations
+          sudo rm -rf aerich.ini
+          aerich init -t db.TORTOISE_ORM_CONFIG
+          aerich init-db
+          # Apply migrations
           aerich migrate
+          aerich heads
+          aerich upgrade
       - name: Test
-        run: |
-          pip install pytest
-          pytest
+        run: pytest
   deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
