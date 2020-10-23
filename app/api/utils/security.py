@@ -158,7 +158,7 @@ def set_credential(response: Response, token: str) -> None:
         value=token,
         max_age=settings.COOKIE_SESSION_AGE,
         secure=not settings.DEBUG_MODE,
-        httponly=True,
+        httponly=not settings.DEBUG_MODE,
     )
 
 
@@ -174,5 +174,5 @@ def remove_credential(response: Response) -> None:
         value="",
         max_age=0,
         secure=not settings.DEBUG_MODE,
-        httponly=True,
+        httponly=not settings.DEBUG_MODE,
     )

@@ -55,8 +55,8 @@ class Settings(BaseSettings):
     POSTGRES = PostgresSettings()
     DB_URL: str = POSTGRES_DB_URL.format(**POSTGRES.dict())
     DB_MODELS: List[str] = [
-        "api.users.models.user",
         "api.users.models.address",
+        "api.users.models.user",
         "api.angels.models.angel",
         "api.angels.models.contact",
         "aerich.models",
