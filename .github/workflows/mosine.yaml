@@ -43,7 +43,7 @@ jobs:
   #       run: poetry run pytest
   deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'pull_request'
     # needs: test
     steps:
       - name: Initialize Google Cloud SDK
