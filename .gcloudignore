@@ -32,3 +32,4 @@ dmypy.json
 # Dev
 docker-compose.yml
 scripts
+.github
