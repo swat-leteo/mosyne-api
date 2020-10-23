@@ -52,7 +52,7 @@ jobs:
       - name: Migrations
         run: |
           sudo rm -rf app/db/migrations/**
-          aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
+          aerich init -t app.db.settings.TORTOISE_ORM_CONFIG --location app/db/migrations
           aerich init-db
           aerich migrate
       - name: Test
