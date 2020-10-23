@@ -3,7 +3,14 @@
 
 # Init db if not exists migrations
 
-aerich init -t db.settings.TORTOISE_ORM_CONFIG --location db/migrations
+aerich init -t db.TORTOISE_ORM_CONFIG
+aerich init-db
+
+# Allow register the ORM (needed cause an aerich bug)
+
+rm -rf migrations
+rm -rf aerich.ini
+aerich init -t db.TORTOISE_ORM_CONFIG
 aerich init-db
 
 # Run migrations
