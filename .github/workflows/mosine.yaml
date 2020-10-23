@@ -2,45 +2,45 @@ name: mosineAPI
 on: [pull_request]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: testing
-          POSTGRES_PORT: 5432
-          POSTGRES_HOST: localhost
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    env:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: testing
-      POSTGRES_PORT: 5432
-      POSTGRES_HOST: localhost
-      TESTING: true
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v2.0.0
-        with:
-          poetry-version: 1.1.2
-      - name: Install dependencies
-        run: poetry install --no-root
-      - name: Run tests
-        run: poetry run pytest
+  # test:
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: postgres:13
+  #       ports:
+  #         - 5432:5432
+  #       env:
+  #         POSTGRES_PASSWORD: postgres
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_DB: testing
+  #         POSTGRES_PORT: 5432
+  #         POSTGRES_HOST: localhost
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #   env:
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_DB: testing
+  #     POSTGRES_PORT: 5432
+  #     POSTGRES_HOST: localhost
+  #     TESTING: true
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: 3.8
+  #     - name: Install poetry
+  #       uses: abatilo/actions-poetry@v2.0.0
+  #       with:
+  #         poetry-version: 1.1.2
+  #     - name: Install dependencies
+  #       run: poetry install --no-root
+  #     - name: Run tests
+  #       run: poetry run pytest
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
