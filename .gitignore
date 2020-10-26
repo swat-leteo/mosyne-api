@@ -92,6 +92,7 @@ dmypy.json
 # Migrations
 **/migrations/**
 app/aerich.ini
+**/aerich.ini
 
 # App engine
 key.json
