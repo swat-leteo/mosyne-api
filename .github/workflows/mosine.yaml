@@ -34,7 +34,7 @@ jobs:
           gae_variables: ${{ secrets.GAE_VARIABLES }}
       - name: Deploy to Google App Engine
         run: |
-          gcloud auth active-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json
+          gcloud auth activate-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json
 
           # Choose current project
           gcloud config set project ${{ secrets.PROJECT_ID }}
