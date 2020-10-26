@@ -14,7 +14,7 @@ jobs:
       EMAIL_SENDER: ${{ secrets.EMAIL_SENDER_TEST }}
     steps:
       - uses: actions/checkout@v2
-      - name: Build and Migrations
+      - name: Build stack and run migrations
         run: docker-compose -f docker-compose.ci.yml up -d
       - name: Wait until setup complete
         run: sleep 15s
