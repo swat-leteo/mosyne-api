@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TESING: true
-      SENDGRID_API_KEY: ${{ SENDGRID_API_KEY_TEST }}
-      EMAIL_SENDER: ${{ EMAIL_SENDER_TEST }}
+      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY_TEST }}
+      EMAIL_SENDER: ${{ secrets.EMAIL_SENDER_TEST }}
     steps:
       - uses: actions/checkout@v2
       - name: Test
