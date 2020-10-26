@@ -7,10 +7,7 @@ services:
       context: .
       args:
         INSTALL_DEV: ${INSTALL_DEV-true}
-    env_file: ./app/.env
-    environment:
-      - TESTING=true
-      - SECRET_JWT=test-secret
+    env_file: app/.env
     ports:
       - 8080:80
     volumes:
@@ -24,10 +21,9 @@ services:
       - app-db-data:/var/lib/postgresql/data/pgdata
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_SERVER=db
-      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=testing
+      - POSTGRES_USER=postgres
+      - POSTGRES_SERVER=db
 
 volumes:
   app-db-data:
