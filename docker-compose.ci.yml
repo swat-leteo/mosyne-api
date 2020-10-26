@@ -12,18 +12,19 @@ services:
       - DEBUG_MODE=True
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=mosyne
+      - POSTGRES_DB=testing
       - POSTGRES_PORT=5432
       - POSTGRES_SERVER=db
       - SECRET_JWT=test_secret
       - SENDGRID_API_KEY
       - EMAIL_SENDER
+      - SENDGRID_API_KEY=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
+      - EMAIL_SENDER=emanuelosva@gmail.com
     ports:
       - 8080:80
-    volumes:
-      - ./app:/app
     command: >
-      bash -c "source prestart.sh
+      bash -c "rm -rf migrations
+      && source prestart.sh
       && pytest --cov=. --cov-report=term-missing --verbose tests"
 
   db:
