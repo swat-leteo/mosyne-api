@@ -10,6 +10,7 @@ services:
     env_file: ./app/.env
     environment:
       - TESTING=true
+      - SECRET_JWT=test-secret
     ports:
       - 8080:80
     volumes:

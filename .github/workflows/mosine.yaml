@@ -8,68 +8,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged
-    services:
-      postgres:
-        image: postgres:13
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: testing
-          POSTGRES_PORT: 5432
-          POSTGRES_HOST: localhost
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    env:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: testing
-      POSTGRES_PORT: 5432
-      POSTGRES_HOST: localhost
-      TESTING: true
-      SECRET_JWT: test-secret
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install poetry
-        uses: abatilo/actions-poetry@v2.0.0
-        with:
-          poetry-version: 1.1.2
-      - name: Install dependencies
-        run: |
-          poetry export -f requirements.txt --output requirements.txt
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Migrations
-        run: |
-          cd app
-          # Make sure there are not previous migrations
-          sudo rm -rf migrations
-          # Init the db and ORM
-          aerich init -t db.TORTOISE_ORM_CONFIG
-          aerich init-db
-          # To create the ORM manager (cause aerich bug)
-          sudo rm -rf migrations
-          sudo rm -rf aerich.ini
-          aerich init -t db.TORTOISE_ORM_CONFIG
-          aerich init-db
-          # Apply migrations
-          aerich migrate
-          aerich heads
-          aerich upgrade
       - name: Test
-        run: pytest
+        run: docker-compose -f docker-compose.test.yml
   deploy:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged
     needs: test
     steps:
       - name: Initialize Google Cloud SDK

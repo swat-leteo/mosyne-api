@@ -23,10 +23,7 @@ from tortoise.contrib.test import finalizer, initializer
 def client():
     """Test client."""
     db_url = f"postgres://postgres:postgres@localhost:5432/testing"
-    if os.getenv("TESTING", False):
-        initializer(settings.DB_MODELS, db_url=db_url)
-    else:
-        initializer(settings.DB_MODELS)
+    initializer(settings.DB_MODELS)
     with TestClient(app) as c:
         yield c
     finalizer()
