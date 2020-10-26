@@ -9,29 +9,32 @@ services:
         INSTALL_DEV: ${INSTALL_DEV-true}
     environment:
       - TESTING=True
-      - DEBUG_MODE=True
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=testing
       - POSTGRES_PORT=5432
       - POSTGRES_SERVER=db
+      - DEBUG_MODE=True
       - SECRET_JWT=test_secret
       - SENDGRID_API_KEY
       - EMAIL_SENDER
-      - SENDGRID_API_KEY=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
-      - EMAIL_SENDER=emanuelosva@gmail.com
     ports:
       - 8080:80
     command: >
       bash -c "rm -rf migrations
+      && rm -rf aerich.ini
+      && sleep 10s
       && source prestart.sh
-      && pytest --cov=. --cov-report=term-missing --verbose tests"
+      && tail -f /dev/null"
 
   db:
     container_name: mosyne_db
     image: postgres:13
+    ports:
+      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_SERVER=db
       - POSTGRES_DB=testing
+      - POSTGRES_PORT=5432
+      - POSTGRES_SERVER=db
