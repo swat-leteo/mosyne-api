@@ -3,7 +3,6 @@ Pytest Fixtures
 """
 
 # Built in
-import os
 from uuid import uuid4
 
 # Test tools
