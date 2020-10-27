@@ -33,3 +33,5 @@ dmypy.json
 docker-compose.yml
 scripts
 .github
+app/aerich.ini
+app/migrations
