@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+# Await until DB is up
+sleep 3s
 
 # Init db if not exists migrations
 
