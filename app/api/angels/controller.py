@@ -38,4 +38,31 @@ async def create_angel(
 
     except IntegrityError:
         return exceptions.conflict_409("Something Wrong")
-    return await AngelDto.from_orm(angel)
+    return await AngelDto.from_tortoise_orm(angel)
+
+
+async def get_angel_id(angel_id: int) -> AngelDto:
+    try:
+        angel = await Angel.get(id=id)
+    except IntegrityError:
+        return exceptions.not_found_404("The angel does not exist")
+    return AngelDto.from_tortoise_orm(angel)
+
+
+async def update_angel_data(angel_id: int, angel_data: AngelDto) -> AngelDto:
+    try:
+        angel = await Angel.get(id=angel_id)
+        angel_data_dict = angel_data.dict()
+        angel.update_from_dict(angel_data_dict)
+        await angel.save()
+    except IntegrityError:
+        return exceptions.conflict_409("Something was wrong")
+    return AngelDto.from_tortoise_orm(angel)
+
+
+async def delete_angel_data(angel_id: int) -> None:
+    try:
+        angel = Angel.get(id=angel_id)
+        await angel.delete()
+    except IntegrityError:
+        return exceptions.not_found_404("Angel does not exist")

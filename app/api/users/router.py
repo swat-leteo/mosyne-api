@@ -63,7 +63,7 @@ async def update_user_info(
     responses=create_responses([401, 403, 404]),
 )
 async def delete_existing_user(user=Depends(get_auth_user)) -> responses.Msg:
-    """Delete a existing user that matches th passed id."""
+    """Delete a existing user that matches the passed id."""
     await delete_user(user.id)
     return responses.Msg(detail="User deleted")
 
