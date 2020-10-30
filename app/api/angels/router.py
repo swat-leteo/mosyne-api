@@ -92,7 +92,8 @@ async def get_angel_by_ud(id: UUID) -> AngelDto:
     "/{id}/qr",
     status_code=200,
     response_model=AngelQrDto,
-    responses=create_responses([404]),
+    responses=create_responses([401, 403, 404]),
+    dependencies=[Depends(get_auth_user)]
 )
 async def get_angel_qr_code(id: UUID) -> AngelQrDto:
     """Retrieve the angel QR code image in base64 format."""
