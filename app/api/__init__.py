@@ -20,7 +20,7 @@ api_router = APIRouter()
 api_router.include_router(auth_router, prefix="/auth", tags=["Auth"])
 
 # --- USER router --- #
-api_router.include_router(user_router, prefix="/user", tags=["Users"])
+api_router.include_router(user_router, prefix="/users", tags=["Users"])
 
 # --- ANGEL router --- #
-api_router.include_router(angel_router, prefix="/angel", tags=["Angels"])
+api_router.include_router(angel_router, prefix="/angels", tags=["Angels"])
