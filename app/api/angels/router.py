@@ -48,7 +48,7 @@ router = APIRouter()
     "",
     status_code=201,
     response_model=AngelDto,
-    responses=create_responses([401, 403, 412]),
+    responses=create_responses([400, 401, 403, 412]),
 )
 async def add_new_angel(
     angel_info: AngelCreateDto,
@@ -67,7 +67,7 @@ async def add_new_angel(
 @router.get(
     "",
     status_code=200,
-    response_model=AngelListDto,
+    response_model=List[AngelDto],
     responses=create_responses([401, 403]),
 )
 async def get_all_angels(user=Depends(get_auth_user)) -> AngelListDto:
@@ -105,7 +105,7 @@ async def get_angel_qr_code(id: UUID) -> AngelQrDto:
     "/{id}",
     status_code=200,
     response_model=AngelDto,
-    responses=create_responses([401, 403, 404, 409]),
+    responses=create_responses([400, 401, 403, 404, 409]),
     dependencies=[Depends(get_auth_user)],
 )
 async def update_angel_data(id: UUID, angel_info: AngelUpdateDto) -> AngelDto:
@@ -118,7 +118,7 @@ async def update_angel_data(id: UUID, angel_info: AngelUpdateDto) -> AngelDto:
     "/contact/{id}",
     status_code=200,
     response_model=AngelDto,
-    responses=create_responses([401, 403, 404]),
+    responses=create_responses([400, 401, 403, 404]),
     dependencies=[Depends(get_auth_user)],
 )
 async def update_angel_contact_data(id: UUID, contact_info: ContactDto) -> AngelDto:
