@@ -5,6 +5,7 @@ Functions to manage the email sends.
 # Built in
 import os
 from pathlib import Path
+from string import Template
 
 # Settings
 from config import settings
@@ -31,7 +32,8 @@ def send_verification_email(recipient_name: str, email: str, token: str) -> None
         template_str = f.read()
 
     link = f"{settings.API_HOST}/api/auth/make-verification?token={token}"
-    email_content = template_str.format(recipient_name=recipient_name, link=link)
+    template = Template(template_str)
+    email_content = template.substitute(recipient_name=recipient_name, link=link)
 
     email = email_sender.create_email(
         to_list=[email],
@@ -53,7 +55,8 @@ def send_recovery_password_email(email: str, token: str) -> None:
         template_str = f.read()
 
     link = f"{settings.WEB_HOST}/recovery-password?token={token}?email={email}"
-    email_content = template_str.format(link=link)
+    template = Template(template_str)
+    email_content = template.substitute(link=link)
 
     email = email_sender.create_email(
         to_list=[email],
@@ -83,7 +86,8 @@ def send_angel_advise(
     else:
         location = "Desconocida."
 
-    email_content = template_str.format(angel_name=angel_name, location=location)
+    template = Template(template_str)
+    email_content = template.substitute(angel_name=angel_name, location=location)
 
     email = email_sender.create_email(
         to_list=[email],

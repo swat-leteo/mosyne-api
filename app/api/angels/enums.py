@@ -15,6 +15,8 @@ class RELATION(str, Enum):
     dad = "padre"
     grandma = "abuela"
     grandpa = "abuelo"
+    grandchild = "nieto"
+    granddaugther = "nieta"
     friend = "amig@"
     uncle = "tio"
     aunt = "tia"
@@ -40,3 +42,16 @@ class DETONANT(str, Enum):
 
     depression = "depression"
     neurological = "neurological"
+
+
+class NATIONALITY(str, Enum):
+    Argentina = "Agentina"
+    Bolivia = "Boliviana"
+    Chile = "Chilena"
+    Guatemala = "Gautemalteca"
+    Honduras = "Hondureña"
+    Mexico = "Mexicana"
+    Panama = "Panameña"
+    Peru = "Peruana"
+    Spain = "Española"
+    Venezuela = "Venezolana"

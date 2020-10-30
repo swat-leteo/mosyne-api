@@ -4,6 +4,7 @@ Router - Auth routes.
 
 # Responses
 from api.utils import responses
+from api.utils.responses import create_responses
 
 # Security utils
 from api.utils.security import (
@@ -39,10 +40,8 @@ router = APIRouter()
 @router.post(
     "/signup",
     status_code=201,
-    responses={
-        "201": {"model": responses.EmailMsg},
-        "409": {"model": responses.Conflict},
-    },
+    response_model=responses.EmailMsg,
+    responses=create_responses([409]),
 )
 async def register_user(
     user_info: SignupInfo, background_task: BackgroundTasks
@@ -63,12 +62,8 @@ async def register_user(
 @router.post(
     "/login",
     status_code=200,
-    responses={
-        "200": {"model": UserDto},
-        "401": {"model": responses.Unauthorized},
-        "403": {"model": responses.Forbidden},
-        "412": {"model": responses.PreconditionFailed},
-    },
+    response_model=UserDto,
+    responses=create_responses([401, 403, 412]),
 )
 async def login_user(credentials: LoginCredentials, response: Response) -> UserDto:
     """Verify user credentials and return user info."""
@@ -81,9 +76,7 @@ async def login_user(credentials: LoginCredentials, response: Response) -> UserD
 @router.post(
     "/logout",
     status_code=200,
-    responses={
-        "200": {"model": responses.Msg},
-    },
+    response_model=responses.Msg,
     dependencies=[Depends(get_auth_user)],
 )
 async def logout_user(response: Response) -> dict:
@@ -95,9 +88,7 @@ async def logout_user(response: Response) -> dict:
 @router.post(
     "/verification",
     status_code=200,
-    responses={
-        "200": {"model": responses.Msg},
-    },
+    response_model=responses.Msg,
 )
 async def resend_verification_email(
     background_task: BackgroundTasks,
@@ -117,9 +108,7 @@ async def resend_verification_email(
 @router.post(
     "/recovery-password",
     status_code=200,
-    responses={
-        "200": {"model": responses.Msg},
-    },
+    response_model=responses.Msg,
 )
 async def send_recovery_email(
     background_task: BackgroundTasks,
@@ -138,10 +127,8 @@ async def send_recovery_email(
 @router.post(
     "/reset-password",
     status_code=200,
-    responses={
-        "200": {"model": responses.Msg},
-        "404": {"model": responses.NotFound},
-    },
+    response_model=responses.Msg,
+    responses=create_responses([404]),
 )
 async def reset_credentials(
     token: str = Body(...),
@@ -155,9 +142,7 @@ async def reset_credentials(
 @router.get(
     "/make-verification",
     status_code=200,
-    responses={
-        "200": {"model": responses.Msg},
-    },
+    response_model=responses.Msg,
 )
 async def confirm_user_email(token: str = Query(...)) -> None:
     """Validate the user email address."""

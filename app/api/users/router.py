@@ -9,6 +9,7 @@ from uuid import UUID
 
 # Responses
 from api.utils import responses
+from api.utils.responses import create_responses
 from api.utils.security import get_auth_user
 
 # FastAPI
@@ -33,11 +34,8 @@ router = APIRouter()
 @router.get(
     "",
     status_code=200,
-    responses={
-        "200": {"model": UserDto},
-        "401": {"model": responses.Unauthorized},
-        "403": {"model": responses.Forbidden},
-    },
+    response_model=UserDto,
+    responses=create_responses([401, 403]),
 )
 async def get_current_user(user=Depends(get_auth_user)) -> UserDto:
     """Retrieve data of the current logged user."""
@@ -47,12 +45,8 @@ async def get_current_user(user=Depends(get_auth_user)) -> UserDto:
 @router.put(
     "",
     status_code=200,
-    responses={
-        "200": {"model": UserDto},
-        "401": {"model": responses.Unauthorized},
-        "403": {"model": responses.Forbidden},
-        "409": {"model": responses.Conflict},
-    },
+    response_model=UserDto,
+    responses=create_responses([401, 403, 409]),
 )
 async def update_user_info(
     user_info: UserUpdateDto, user=Depends(get_auth_user)
@@ -65,15 +59,11 @@ async def update_user_info(
 @router.delete(
     "",
     status_code=200,
-    responses={
-        "200": {"model": responses.Msg},
-        "401": {"model": responses.Unauthorized},
-        "403": {"model": responses.Forbidden},
-        "404": {"model": responses.NotFound},
-    },
+    response_model=responses.Msg,
+    responses=create_responses([401, 403, 404]),
 )
 async def delete_existing_user(user=Depends(get_auth_user)) -> responses.Msg:
-    """Delete a existing user that matches th passed id."""
+    """Delete a existing user that matches the passed id."""
     await delete_user(user.id)
     return responses.Msg(detail="User deleted")
 
@@ -81,11 +71,8 @@ async def delete_existing_user(user=Depends(get_auth_user)) -> responses.Msg:
 @router.post(
     "/angel-advise/{guardian_id}",
     status_code=200,
-    responses={
-        "200": {"model": responses.EmailMsg},
-        "401": {"model": responses.Unauthorized},
-        "403": {"model": responses.Forbidden},
-    },
+    response_model=responses.EmailMsg,
+    responses=create_responses([401, 403]),
 )
 async def send_email_for_angel(
     guardian_id: UUID,
