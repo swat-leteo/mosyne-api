@@ -78,3 +78,73 @@ def profile_mock():
             "cp": "01596",
         },
     }
+
+
+@pytest.fixture()
+def angel_mock():
+    """Return the test angel."""
+    return {
+        "angel_info": {
+            "guardian_relation": "hijo",
+            "firstname": "Odin",
+            "lastname": "DadOFAll",
+            "nationality": "Asgardian",
+            "about": "Is the dad of all",
+            "living_alone": False,
+            "suffering": "Alzheimer",
+            "blood_type": "AB+",
+            "health_info": "He don't have a eye",
+            "surgeries": [
+                "Eye surgerie"
+            ],
+            "alergies": [],
+            "medicines": [],
+            "detonant": "depression",
+            "diabetes": False,
+            "hypertension": False,
+            "address": {
+                "city": "CDMX",
+                "municipality": "Benito Juarez",
+                "neighborhood": "Venados",
+                "street": "Popocatepetl",
+                "num_int": "5",
+                "num_ext": "25",
+                "cp": "01596",
+            },
+        },
+        "contacts": [
+            {
+                "angel_relation": "hijo",
+                "name": "Thor",
+                "phone": "54858692",
+                "cel": "+60589536815",
+            }
+        ]
+    }
+
+
+@pytest.fixture()
+def angel_update_mock():
+    """Return the test angel."""
+    return {
+        "guardian_relation": "hijo",
+        "firstname": "Odin",
+        "lastname": "DadOFAll",
+        "nationality": "Asgardian",
+        "about": "Is the dad of all",
+        "living_alone": False,
+        "suffering": "Alzheimer",
+        "blood_type": "AB+",
+        "health_info": "He don't have a eye",
+        "surgeries": [
+            "Eye surgerie",
+            "Another in test"
+        ],
+        "alergies": [
+            "Malekey",
+        ],
+        "medicines": [],
+        "detonant": "depression",
+        "diabetes": False,
+        "hypertension": False,
+    }
