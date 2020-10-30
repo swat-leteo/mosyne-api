@@ -74,6 +74,7 @@ AngelListDto = pydantic_queryset_creator(Angel, exclude=("guardian",))
 class AngelDto(AngelDtoBase):
     """Angel Schema."""
 
+    address: AddressDto
     surgeries: List[str] = Field(...)
     alergies: List[str] = Field(...)
     medicines: List[str] = Field(...)

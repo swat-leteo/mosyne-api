@@ -89,7 +89,7 @@ async def get_angels_of_user(user: User) -> List[AngelDto]:
     - angels: List[AngelDto] - A list of angels.
     """
     angels = Angel.filter(guardian=user)
-    return await AngelListDto.from_queryset(angels)
+    return await AngelDto.from_queryset(angels)
 
 
 async def get_angel(angel_id: UUID) -> AngelDto:
@@ -104,7 +104,7 @@ async def get_angel(angel_id: UUID) -> AngelDto:
     - angel: AngelDto - The angel info.
     """
     try:
-        angel = await Angel.get(id=angel_id).prefetch_related("address")
+        angel = await Angel.get(id=angel_id)
     except DoesNotExist:
         return exceptions.not_found_404("The angel does not exist")
     return await AngelDto.from_tortoise_orm(angel)
@@ -165,7 +165,7 @@ async def update_angel_contact(contact_id: UUID, contact_info: ContactDto) -> An
     except IntegrityError as e:
         return exceptions.conflict_409(e.args[0])
 
-    angel = await Angel.get(id=angel_id).prefetch_related("address")
+    angel = await Angel.get(contacts=contact.id).prefetch_related("address")
     return await AngelDto.from_tortoise_orm(angel)
 
 
