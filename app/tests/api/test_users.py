@@ -45,7 +45,7 @@ def test_get_current_user(client, get_token, profile_mock, app_settings):
 
     token = get_token(user_email)
     response = client.get(
-        "/api/user", cookies={f"{app_settings.COOKIE_SESSION_NAME}": token}
+        "/api/users", cookies={f"{app_settings.COOKIE_SESSION_NAME}": token}
     )
 
     body = response.json()
@@ -60,7 +60,7 @@ def test_get_current_user_unauthorized(client, get_token, app_settings):
 
     token = get_token("invalid@invalid.com")
     response = client.get(
-        "/api/user", cookies={f"{app_settings.COOKIE_SESSION_NAME}": token}
+        "/api/users", cookies={f"{app_settings.COOKIE_SESSION_NAME}": token}
     )
 
     assert response.status_code == 401
@@ -73,7 +73,7 @@ def test_update_user(client, get_token, app_settings, profile_mock):
     profile_mock.update({"email": user_email})
 
     response = client.put(
-        "/api/user",
+        "/api/users",
         cookies={f"{app_settings.COOKIE_SESSION_NAME}": token},
         json=profile_mock,
     )
@@ -91,7 +91,7 @@ def test_update_user_unauthorized(client, get_token, app_settings):
     new_phone = "5523569752"
 
     response = client.put(
-        "/api/user",
+        "/api/users",
         cookies={f"{app_settings.COOKIE_SESSION_NAME}": token},
         json={"phone": new_phone},
     )
@@ -105,7 +105,7 @@ def test_delete_user(client, get_token, app_settings):
     token = get_token(user_email)
 
     response = client.delete(
-        "/api/user",
+        "/api/users",
         cookies={f"{app_settings.COOKIE_SESSION_NAME}": token},
     )
     response.json()
@@ -120,7 +120,7 @@ def test_delete_unauthorized(client, get_token, app_settings):
     token = get_token("invalid@ginvalid.com")
 
     response = client.delete(
-        "/api/user",
+        "/api/users",
         cookies={f"{app_settings.COOKIE_SESSION_NAME}": token},
     )
 
