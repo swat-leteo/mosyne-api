@@ -31,7 +31,7 @@ If your angel is loss and a good person find him/her, he/she can scan the QR cod
   - Request & Response Validation
   - Swagger Documentation
   - Docker Based
-  - e2e Testing
+  - e2e Testing - (Coverage: 87%)
   - Automatic migrations
   - Github Actions for CICD
   - Automatic deploy to AppEngine after tests
