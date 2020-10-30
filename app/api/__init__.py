@@ -2,9 +2,8 @@
 Main API - Router
 """
 
-from api.angels.router import router as angel_router
-
 # Routers
+from api.angels.router import router as angel_router
 from api.auth.router import router as auth_router
 from api.users.router import router as user_router
 
