@@ -83,7 +83,7 @@ def upload_file(file_base64: str) -> str:
     filename = f"mosyne-avatar.{ext}"
 
     # Pre upload actions.
-    _check_extension(ext)
+    #_check_extension(ext) # Avoid for bug in production
     filename = _unique_filename(filename)
 
     bucket = get_gcp_bucket()
