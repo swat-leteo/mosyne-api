@@ -81,7 +81,7 @@ class Settings(BaseSettings):
     ################
 
     GOOGLE_STORAGE_BUCKET: str = os.getenv("GOOGLE_STORAGE_BUCKET")
-    ALLOWED_EXTENSIONS: List[str] = os.getenv("ALLOWED_EXTENSIONS")
+    ALLOWED_EXTENSIONS: List[str] = ["png", "jpg", "jpeg"]
 
 
 settings = Settings()
