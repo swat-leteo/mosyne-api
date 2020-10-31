@@ -24,17 +24,16 @@ from .connection import get_gcp_bucket
 ######################
 
 
-def _check_extension(filename: str) -> None:
+def _check_extension(extension: str) -> None:
     """Check if the extension is allowed.
     If not, raise a bad request exception.
 
     Params:
     -------
-    - filename: str - The file-filename.
+    - extension: str - The file extension.
     """
-    _, ext = os.path.splitext(filename)
 
-    if ext.replace(".", "") not in settings.ALLOWED_EXTENSIONS:
+    if extension not in settings.ALLOWED_EXTENSIONS:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Extension not allowed.",
@@ -77,14 +76,14 @@ def upload_file(file_base64: str) -> str:
     """
 
     # Get metada according to type file.
-    metadata = file_base64.split(";")
-    content_type = metadata[0][5:]
-    file_data = base64.b64decode(metadata[1][7:])
+    metadata_and_image = file_base64.split(";base64,")
+    content_type = metadata_and_image[0].split(":")[1]
+    file_data = base64.b64decode(metadata_and_image[1])
     ext = content_type.split("/")[1]
     filename = f"mosyne-avatar.{ext}"
 
     # Pre upload actions.
-    #_check_extension(filename) # avoid by bug in prod
+    _check_extension(ext)
     filename = _unique_filename(filename)
 
     bucket = get_gcp_bucket()
