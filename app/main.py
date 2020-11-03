@@ -38,14 +38,13 @@ register_tortoise(app, config=TORTOISE_ORM_CONFIG, generate_schemas=False)
 ###############
 
 # CORS middleware
-if len(settings.CORS_ORIGIN) != 0:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=settings.CORS_ORIGIN,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Session middleware (needed to implements google auth)
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_JWT)
