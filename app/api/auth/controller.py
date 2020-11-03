@@ -64,6 +64,20 @@ async def login(email: str, password: str) -> UserDto:
     return await UserDto.from_tortoise_orm(user)
 
 
+async def get_or_create_user(user_from_google: dict) -> User:
+    data = user_from_google
+    user = await User.filter(email=data.get("email")).first()
+    if not user:
+        user_info = SignupInfo(
+            firstname=data.get("given_name"),
+            lastname=data.get("family_name") or " ",
+            email=data.get("email"),
+            password=data.get("sub"),
+        )
+        user = await signup(user_info)
+    return user
+
+
 async def confirm_email(token: str) -> None:
     """Change the status of "is_verified" to True.
 

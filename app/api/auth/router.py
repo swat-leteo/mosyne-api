@@ -18,14 +18,17 @@ from api.utils.security import (
 from config import settings
 
 # FastAPI
-from fastapi import APIRouter, BackgroundTasks, Body, Depends, Query, Response
+from fastapi import APIRouter, BackgroundTasks, Body, Depends, Query, Request, Response
 from fastapi.responses import RedirectResponse
 
 # Mailing
 from services.mails import send_recovery_password_email, send_verification_email
 
 # Controller
-from .controller import confirm_email, login, reset_password, signup
+from .controller import confirm_email, get_or_create_user, login, reset_password, signup
+
+# Oauth
+from .google import oauth
 
 # Schemas
 from .schema import LoginCredentials, SignupInfo, UserDto
@@ -148,3 +151,35 @@ async def confirm_user_email(token: str = Query(...)) -> None:
     """Validate the user email address."""
     await confirm_email(token)
     return RedirectResponse(url=f"{settings.WEB_HOST}/login")
+
+
+@router.get("/google-auth")
+async def google_auth(request: Request) -> any:
+    """Google redirect to grant access."""
+    redirect_uri = request.url_for("google_auth_callback")
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@router.route("/google-auth-callback")
+async def google_auth_callback(request: Request) -> None:
+    """Return the User authenticated by Google Strategy."""
+    token = await oauth.google.authorize_access_token(request)
+    user_info = await oauth.google.parse_id_token(request, token)
+    user = await get_or_create_user(user_info)
+    token = create_access_token(user.email, auth=True)
+    url = f"{settings.WEB_HOST}/google-login?token={token}"
+    return RedirectResponse(url=url)
+
+
+@router.post(
+    "/google-login",
+    status_code=200,
+    response_model=UserDto,
+    responses=create_responses([401]),
+)
+async def google_login_manager(token: str, response: Response) -> UserDto:
+    """Return the User authenticated by Google Strategy and set session cookie."""
+    user = await get_auth_user(token=token)
+    session_token = create_access_token(user.email)
+    set_credential(response, session_token)
+    return await UserDto.from_tortoise_orm(user)

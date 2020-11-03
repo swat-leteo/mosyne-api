@@ -72,13 +72,16 @@ def hash_password(plain_password: str) -> str:
     return pwd_context.hash(plain_password)
 
 
-def create_access_token(email: str, short_duration: bool = False) -> str:
+def create_access_token(
+    email: str, short_duration: bool = False, auth: bool = False
+) -> str:
     """Return a encoded jwt.
 
     Params:
     -------
     - data: dict - The data to encoded in jwt paayload.
     - short_duration: bool - Indicate if the token has a short time duration.
+    - auth: bool - Indicate if token is used for auth (extra shirt duration)
 
     Return:
     -------
@@ -88,6 +91,8 @@ def create_access_token(email: str, short_duration: bool = False) -> str:
 
     if short_duration:
         expires_delta = timedelta(minutes=25)
+    elif auth:
+        expires_delta = timedelta(seconds=30)
     else:
         expires_delta = timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
 
