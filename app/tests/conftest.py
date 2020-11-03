@@ -94,9 +94,7 @@ def angel_mock():
             "suffering": "Alzheimer",
             "blood_type": "AB+",
             "health_info": "He don't have a eye",
-            "surgeries": [
-                "Eye surgerie"
-            ],
+            "surgeries": ["Eye surgerie"],
             "alergies": [],
             "medicines": [],
             "detonant": "depression",
@@ -119,7 +117,7 @@ def angel_mock():
                 "phone": "54858692",
                 "cel": "+60589536815",
             }
-        ]
+        ],
     }
 
 
@@ -136,10 +134,7 @@ def angel_update_mock():
         "suffering": "Alzheimer",
         "blood_type": "AB+",
         "health_info": "He don't have a eye",
-        "surgeries": [
-            "Eye surgerie",
-            "Another in test"
-        ],
+        "surgeries": ["Eye surgerie", "Another in test"],
         "alergies": [
             "Malekey",
         ],

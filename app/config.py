@@ -51,6 +51,9 @@ class Settings(BaseSettings):
     COOKIE_SESSION_NAME: str = "oreo_session"
     COOKIE_SESSION_AGE: int = 60 * 60 * 24 * 7 * 4  # One month
 
+    GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID")
+    GOOGLE_CLIENT_SECRET: str = os.getenv("GOOGLE_CLIENT_SECRET")
+
     ############
     # DataBase #
     ############

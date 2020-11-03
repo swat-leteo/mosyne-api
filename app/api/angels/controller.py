@@ -23,14 +23,7 @@ from tortoise.exceptions import DoesNotExist, IntegrityError
 
 # Angel - Models and Schema
 from .models import Angel, Contact
-from .schema import (
-    AngelCreateDto,
-    AngelDto,
-    AngelListDto,
-    AngelQrDto,
-    AngelUpdateDto,
-    ContactDto,
-)
+from .schema import AngelCreateDto, AngelDto, AngelQrDto, AngelUpdateDto, ContactDto
 
 
 async def create_angel(
