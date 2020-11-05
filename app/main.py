@@ -38,9 +38,10 @@ register_tortoise(app, config=TORTOISE_ORM_CONFIG, generate_schemas=False)
 ###############
 
 # CORS middleware
+ALLOWED_ORIGINS = [settings.WEB_HOST] + settings.ALLOW_DEV_ORIGINS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

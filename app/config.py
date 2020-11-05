@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     WEB_HOST: str = "https://mosine.vercel.app"
     API_HOST: str = os.getenv("API_HOST", "http://localhost:8080")
 
+    ALLOW_DEV_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8080"]
+
     DEBUG_MODE: bool = os.getenv("DEBUG_MODE", False)
 
     ############
