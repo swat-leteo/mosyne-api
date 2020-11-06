@@ -17,6 +17,7 @@ from config import settings
 
 # Qr
 from services.qr import generate_qr_base64_web
+from services.storage import get_or_update_image
 
 # Exceptions
 from tortoise.exceptions import DoesNotExist, IntegrityError
@@ -59,6 +60,9 @@ async def create_angel(
             address_data = user_dto.address.dict()
 
         address = await Address.create(**address_data)
+
+        if angel_data.get("photo"):
+            angel_data["photo"] = get_or_update_image(angel_data["photo"])
         angel = await Angel.create(**angel_data, guardian=user, address=address)
 
         # Create all related contacts
@@ -118,6 +122,9 @@ async def update_angel(angel_id: UUID, angel_info: AngelUpdateDto) -> AngelDto:
     angel_data: dict = angel_info.dict()
     address_data = angel_data.get("address")
     angel_data.pop("address")
+
+    if angel_data.get("photo"):
+        angel_data["photo"] = get_or_update_image(angel_data["photo"])
 
     try:
         angel = await Angel.get(id=angel_id)

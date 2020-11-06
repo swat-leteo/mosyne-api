@@ -586,6 +586,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "pdfkit"
+version = "0.6.1"
+description = "Wkhtmltopdf python wrapper to convert html to pdf using the webkit rendering engine and qt"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pluggy"
 version = "0.13.1"
 description = "plugin and hook calling mechanisms for python"
@@ -1002,7 +1010,7 @@ standard = ["websockets (>=8.0.0,<9.0.0)", "watchgod (>=0.6,<0.7)", "python-dote
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "1307928fe0b286eb601e261c8089caa3a1fb1b3c1e28970c9040087655d857da"
+content-hash = "7193ed8322d728aba1e219b884a3216bb5acac15bbe2dbc7e8f4779e3995095b"
 
 [metadata.files]
 aerich = [
@@ -1335,6 +1343,12 @@ passlib = [
 pathspec = [
     {file = "pathspec-0.8.0-py2.py3-none-any.whl", hash = "sha256:7d91249d21749788d07a2d0f94147accd8f845507400749ea19c1ec9054a12b0"},
     {file = "pathspec-0.8.0.tar.gz", hash = "sha256:da45173eb3a6f2a5a487efba21f050af2b41948be6ab52b6a1e3ff22bb8b7061"},
+]
+pdfkit = [
+    {file = "pdfkit-0.6.1-py2-none-any.whl", hash = "sha256:6a866c9659e62a81abd72cdb32b400762d76085b964beb0b15106d573a539677"},
+    {file = "pdfkit-0.6.1-py2.7.egg", hash = "sha256:a315a665c266db28fb751891d0661fe5e750ced812cb4eadb3ce63afba9a7475"},
+    {file = "pdfkit-0.6.1-py3-none-any.whl", hash = "sha256:05f1c631e8d9ab877886955da825e48b459e097886a21448ab17b34c60cfd66c"},
+    {file = "pdfkit-0.6.1.tar.gz", hash = "sha256:ef1da35b78d534197e7ce4a604a4a190e9aa769e56634957535f3479a50d8cd1"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
