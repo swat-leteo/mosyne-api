@@ -37,6 +37,8 @@ class Angel(MosyneModel):
     nationality = fields.CharField(max_length=30)
     about = fields.CharField(max_length=30, null=True)
 
+    photo = fields.CharField(max_length=1250, default="", null=True)
+
     address = fields.OneToOneField(
         model_name="models.Address",
         on_delete=fields.CASCADE,
