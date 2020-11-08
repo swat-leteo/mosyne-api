@@ -174,8 +174,6 @@ def test_get_qr(client, get_token, app_settings):
     )
 
     assert response.status_code == 200
-    assert "qr_image" in response.json()
-    assert response.json()["qr_image"].startswith("data:image/png;base64,")
 
 
 def test_get_qr_unauthorized(client, get_token, app_settings):
