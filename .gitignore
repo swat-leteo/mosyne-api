@@ -94,6 +94,9 @@ dmypy.json
 app/aerich.ini
 **/aerich.ini
 
+# Pdf
+app/services/pdf/tmp/*.pdf
+
 # App engine
 key.json
 gae_vars.json
