@@ -2,6 +2,8 @@
 Controller - Angels bussiness logic.
 """
 
+from datetime import datetime
+
 # Typing
 from typing import List
 from uuid import UUID
@@ -15,6 +17,9 @@ from api.utils import exceptions
 # Config
 from config import settings
 
+# PDF
+from services.pdf import get_mosine_gafete
+
 # Qr
 from services.qr import generate_qr_base64_web
 from services.storage import get_or_update_image
@@ -24,7 +29,7 @@ from tortoise.exceptions import DoesNotExist, IntegrityError
 
 # Angel - Models and Schema
 from .models import Angel, Contact
-from .schema import AngelCreateDto, AngelDto, AngelQrDto, AngelUpdateDto, ContactDto
+from .schema import AngelCreateDto, AngelDto, AngelUpdateDto, ContactDto
 
 
 async def create_angel(
@@ -183,7 +188,7 @@ async def delete_angel(angel_id: UUID) -> None:
         return exceptions.not_found_404("Angel does not exist")
 
 
-async def get_qr_code(angel_id: UUID) -> AngelQrDto:
+async def get_qr_code(angel_id: UUID) -> str:
     """Generate a QR code image to the angel profile.
 
     Params:
@@ -192,7 +197,7 @@ async def get_qr_code(angel_id: UUID) -> AngelQrDto:
 
     Return:
     -------
-    - qr_image: AngelQrDto - The qr code image in base64 format.
+    - pdf: str - The path to pdf gafet file.
     """
     try:
         angel = await Angel.get(id=angel_id)
@@ -201,4 +206,8 @@ async def get_qr_code(angel_id: UUID) -> AngelQrDto:
 
     angel_url = f"{settings.WEB_HOST}/angels/{angel.id}"
     qr_image = generate_qr_base64_web(url=angel_url)
-    return AngelQrDto(qr_image=qr_image)
+    date = str(datetime.now())
+    date = date.split(" ")[0]
+
+    pdf = get_mosine_gafete(qr_code=qr_image, date=date)
+    return pdf

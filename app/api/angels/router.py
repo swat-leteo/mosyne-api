@@ -16,6 +16,9 @@ from api.utils.security import get_auth_user
 # FastAPI
 from fastapi import APIRouter, Depends, Query
 
+# FastAPI
+from fastapi.responses import FileResponse
+
 # Controller
 from .controller import (
     create_angel,
@@ -28,14 +31,7 @@ from .controller import (
 )
 
 # schemas
-from .schema import (
-    AngelCreateDto,
-    AngelDto,
-    AngelListDto,
-    AngelQrDto,
-    AngelUpdateDto,
-    ContactDto,
-)
+from .schema import AngelCreateDto, AngelDto, AngelListDto, AngelUpdateDto, ContactDto
 
 ################
 # Angel router #
@@ -91,14 +87,14 @@ async def get_angel_by_ud(id: UUID) -> AngelDto:
 @router.get(
     "/{id}/qr",
     status_code=200,
-    response_model=AngelQrDto,
+    # response_model=any,
     responses=create_responses([401, 403, 404]),
     dependencies=[Depends(get_auth_user)],
 )
-async def get_angel_qr_code(id: UUID) -> AngelQrDto:
-    """Retrieve the angel QR code image in base64 format."""
-    qr_code = await get_qr_code(id)
-    return qr_code
+async def get_angel_qr_code(id: UUID) -> bytes:
+    """Retrieve the gafete in pdf file."""
+    pdf = await get_qr_code(id)
+    return FileResponse(pdf, media_type="application/pdf", filename="mosine-gafete.pdf")
 
 
 @router.put(
