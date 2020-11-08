@@ -26,6 +26,7 @@ Authlib = "^0.15.2"
 httpx = "^0.16.1"
 itsdangerous = "^1.1.0"
 pdfkit = "^0.6.1"
+aiofiles = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.790"

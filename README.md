@@ -125,8 +125,8 @@ source scripts/format.sh
 
 ## Endpoints
 
-- API docs (by swagger): https://api-mosine.appspot.com/docs
-- API dics (by OpenAPI): https://api-mosine.appspot.com/redoc
+- API docs (by OpenAPI): https://api-mosine.appspot.com/docs
+- API dics (by Redoc): https://api-mosine.appspot.com/redoc
 
 - Prefix: `/api`
 

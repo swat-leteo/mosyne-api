@@ -15,6 +15,14 @@ tortoise-orm = "*"
 dbdrivers = ["aiomysql", "asyncpg"]
 
 [[package]]
+name = "aiofiles"
+version = "0.6.0"
+description = "File support for asyncio."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "aiosqlite"
 version = "0.15.0"
 description = "asyncio bridge to the standard sqlite3 module"
@@ -1010,12 +1018,16 @@ standard = ["websockets (>=8.0.0,<9.0.0)", "watchgod (>=0.6,<0.7)", "python-dote
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "7193ed8322d728aba1e219b884a3216bb5acac15bbe2dbc7e8f4779e3995095b"
+content-hash = "8384955153678126f5c16aed4016286a562feeed95652e08374a4150775b3108"
 
 [metadata.files]
 aerich = [
     {file = "aerich-0.3.2-py3-none-any.whl", hash = "sha256:863d238b89f2ef4958d8377d849179d5d395793581ff9d9ad4720f6d798bc168"},
     {file = "aerich-0.3.2.tar.gz", hash = "sha256:5ab3a82f51b1e77392894f77a7b61ce42eb68b41af190a28aed577cace119d6b"},
+]
+aiofiles = [
+    {file = "aiofiles-0.6.0-py3-none-any.whl", hash = "sha256:bd3019af67f83b739f8e4053c6c0512a7f545b9a8d91aaeab55e6e0f9d123c27"},
+    {file = "aiofiles-0.6.0.tar.gz", hash = "sha256:e0281b157d3d5d59d803e3f4557dcc9a3dff28a4dd4829a9ff478adae50ca092"},
 ]
 aiosqlite = [
     {file = "aiosqlite-0.15.0-py3-none-any.whl", hash = "sha256:19b984b6702aed9f1c85c023f37296954547fc4030dae8e9d027b2a930bed78b"},

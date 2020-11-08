@@ -1,0 +1,263 @@
+html {
+  box-sizing: border-box;
+  margin: 0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 30px;
+  width: 595px;
+  height: 842px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header h1 {
+  font-size: 38px;
+  color: #3c3c3c;
+  margin: 0 0 4px 0;
+  font-weight: 700;
+}
+header div p {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 700;
+  color: #4c4457;
+}
+header > p {
+  color: #4c4457;
+  font-size: 10px;
+  margin: 0;
+  font-weight: 400;
+}
+header > p span {
+  font-weight: 700;
+}
+main {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px dashed black;
+}
+main section {
+  width: 50%;
+}
+.front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #6f44e0;
+  padding-bottom: 10px;
+}
+.front > svg {
+  margin-top: 20px;
+}
+.front .title {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 45px;
+  text-align: center;
+  color: #f2f2f2;
+  margin: 0;
+}
+.front .instructions {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  position: relative;
+}
+.front .instructions div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.front .instructions p {
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 10px 0;
+  color: #f2f2f2;
+  z-index: 1;
+}
+.front .instructions p:last-of-type {
+  width: 15px;
+  height: 16px;
+  text-align: center;
+  background-color: #a66a6a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 60%;
+  color: #f2f2f2;
+}
+.front .instructions hr {
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+  bottom: 10px;
+  border: 0.5px solid #f2f2f2;
+}
+.front .footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f2f2f2;
+}
+.front .footer h2 {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+.front .footer p {
+  width: 90%;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 8px;
+  text-align: center;
+}
+.back {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.back h1 {
+  width: 100%;
+  height: 72px;
+  display: grid;
+  place-content: center;
+  background-color: #3e5aad;
+  color: #f2f2f2;
+  margin: 0 0 23px;
+  font-size: 18px;
+}
+.back .qr {
+  width: 100%;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.back .qr p {
+  position: absolute;
+  right: -45px;
+  height: 21px;
+  margin: 0;
+  color: #3b3647;
+  font-size: 8px;
+  font-style: italic;
+  font-weight: 300;
+  transform: rotate(270deg);
+}
+.back .instructions {
+  margin-top: 22px;
+  padding: 0 10px;
+}
+.back .instructions h2 {
+  color: #3b3647;
+  font-size: 8px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.back .instructions div div {
+  padding: 0 20px 0 10px;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  place-items: center;
+  margin-bottom: 5px;
+}
+.back .instructions div div h3 {
+  font-size: 9px;
+  color: #f2f2f2;
+  width: 10px;
+  height: 11px;
+  display: grid;
+  place-content: center;
+  background-color: #3e5aad;
+  border-radius: 10px;
+  margin: 0;
+}
+.back .instructions div div p {
+  color: #4c4457;
+  font-size: 9px;
+  margin: 5px 0 0;
+}
+.back .emergency {
+  width: 100%;
+  padding: 0 10px;
+}
+.back .emergency h2 {
+  font-size: 12px;
+  color: #3c3c3c;
+}
+.back .emergency div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.back .emergency div div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.back .emergency div div div {
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+.back .emergency div div div svg {
+  margin-right: 10px;
+}
+.back .emergency div div div p {
+  font-size: 10px;
+}
+.back .emergency div div ul {
+  list-style: none;
+  margin: 0;
+}
+.back .emergency div div ul li {
+  color: #3c3c3c;
+  font-weight: 700;
+  font-size: 10px;
+}
+.instructions {
+  margin-bottom: 30px;
+}
+.instructions h2 {
+  margin: 0 0 24px 0;
+  border-bottom: 0.5px solid #4c4457;
+  font-size: 24px;
+}
+.instructions ol {
+  margin: 0;
+  padding: 0 0 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.instructions ol li {
+  width: 50%;
+  font-size: 11px;
+}
+.instructions ol li::marker {
+  font-weight: 700;
+}
+footer {
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+footer h3 {
+  margin: 0;
+  font-size: 16px;
+}
+footer p {
+  font-size: 10px;
+}
