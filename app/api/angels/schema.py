@@ -74,7 +74,7 @@ AngelListDto = pydantic_queryset_creator(Angel, exclude=("guardian",))
 class AngelDto(AngelDtoBase):
     """Angel Schema."""
 
-    photo: str = Field(..., example="https://mosine.googlestorage.2515-1515-145")
+    photo: str = Field("", example="https://mosine.googlestorage.2515-1515-145")
     address: AddressDto
     surgeries: List[str] = Field(...)
     alergies: List[str] = Field(...)
@@ -85,7 +85,7 @@ class AngelDto(AngelDtoBase):
 class AngelCreateDto(AngelCreateDtoBase):
     """Body schema for create an angel."""
 
-    photo: str = Field(..., example="https://mosine.googlestorage.2515-1515-145")
+    photo: str = Field("", example="https://mosine.googlestorage.2515-1515-145")
     surgeries: List[str] = Field([])
     alergies: List[str] = Field([])
     medicines: List[str] = Field([])
