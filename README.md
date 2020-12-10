@@ -101,7 +101,7 @@ source scripts/format.sh
 **app**
   - ***main.py*** - Server entrypoint.
   - ***db.py*** - Db confgigurations.
-  - ***confgi.py*** - App settings.
+  - ***config.py*** - App settings.
   - ***prestart.sh*** - Prestart script - Manage migrations.
   - `tests` - e2e Testing.
   - `services` - App services.

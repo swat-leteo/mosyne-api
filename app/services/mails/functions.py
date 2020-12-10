@@ -37,7 +37,7 @@ def send_verification_email(recipient_name: str, email: str, token: str) -> None
 
     email = email_sender.create_email(
         to_list=[email],
-        subject="Mosyne - Verification email",
+        subject="Mosine - Verification email",
         html_content=email_content,
     )
     email_sender.send_email(email=email)
@@ -60,7 +60,7 @@ def send_recovery_password_email(email: str, token: str) -> None:
 
     email = email_sender.create_email(
         to_list=[email],
-        subject="Mosyne - Recovery password",
+        subject="Mosine - Recovery password",
         html_content=email_content,
     )
     email_sender.send_email(email=email)
@@ -91,7 +91,7 @@ def send_angel_advise(
 
     email = email_sender.create_email(
         to_list=[email],
-        subject="Mosyne - Aviso Importante.",
+        subject="Mosine - Aviso Importante.",
         html_content=email_content,
     )
     email_sender.send_email(email=email)
