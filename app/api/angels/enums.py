@@ -45,7 +45,7 @@ class DETONANT(str, Enum):
 
 
 class NATIONALITY(str, Enum):
-    Argentina = "Agentina"
+    Argentina = "Argentina"
     Bolivia = "Boliviana"
     Chile = "Chilena"
     Guatemala = "Gautemalteca"
