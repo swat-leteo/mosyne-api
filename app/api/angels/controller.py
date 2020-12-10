@@ -193,7 +193,7 @@ async def get_qr_code(angel_id: UUID) -> str:
 
     Params:
     -------
-    - angel_ud: UUID - The angel id.
+    - angel_id: UUID - The angel id.
 
     Return:
     -------
@@ -211,3 +211,20 @@ async def get_qr_code(angel_id: UUID) -> str:
 
     pdf = get_mosine_gafete(qr_code=qr_image, date=date)
     return pdf
+
+async def get_guardian_email(guardian_id: UUID) -> str:
+    """Return the email of the angel guardian.
+
+    Params:
+    -------
+    - guardian_id: UUID - The angel id.
+
+    Return:
+    -------
+    - email: str - The guardian email.
+    """
+    try:
+        user = await User.get(id=guardian_id)
+        return user.email
+    except DoesNotExist:
+        return False

@@ -14,10 +14,13 @@ from api.utils.responses import create_responses
 from api.utils.security import get_auth_user
 
 # FastAPI
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, Query
 
 # FastAPI
 from fastapi.responses import FileResponse
+
+# Email
+from services.mails import send_angel_advise
 
 # Controller
 from .controller import (
@@ -28,6 +31,7 @@ from .controller import (
     get_qr_code,
     update_angel,
     update_angel_contact,
+    get_guardian_email
 )
 
 # schemas
@@ -78,9 +82,20 @@ async def get_all_angels(user=Depends(get_auth_user)) -> AngelListDto:
     response_model=AngelDto,
     responses=create_responses([401, 403, 404]),
 )
-async def get_angel_by_ud(id: UUID) -> AngelDto:
+async def get_angel_by_id(
+    id: UUID,
+    background_task: BackgroundTasks,
+    send_email: bool = Query(False)
+    ) -> AngelDto:
     """Retrieve an angel by ID."""
     angel = await get_angel(id)
+    if(send_email):
+        guardian_email = await get_guardian_email(angel.guardian_id)
+        angel_name = angel.firstname + " " + angel.lastname
+        print(angel)
+        background_task.add_task(
+            send_angel_advise, email=guardian_email, angel_name=angel_name
+        )
     return angel
 
 
